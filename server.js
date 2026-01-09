@@ -8,6 +8,11 @@ const name = process.env.NAME;
 app.get('/', (req, res) => {
     res.send(`Welcome, ${name}!`); // <-- UPDATED
 });
+
+app.get('/new-route', (req, res) => {
+    res.send(`This is a new route, ${name}!`);
+});
+
 // Define the port number the server will listen on
 const PORT = 3000;
 // Start the server and listen on the specified port
