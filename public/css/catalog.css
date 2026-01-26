@@ -152,3 +152,20 @@
         }
     }
 }
+
+
+.btn-random {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    background-color: #0066cc;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-random:hover {
+    background-color: #0052a3;
+}

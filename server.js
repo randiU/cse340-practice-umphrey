@@ -53,6 +53,17 @@ const courses = {
             { time: '12:00 PM', room: 'GEB 205', professor: 'Brother Davis' },
             { time: '4:00 PM', room: 'GEB 203', professor: 'Sister Enkey' }
         ]
+    },
+    'HIST210': {
+        id: 'HIST210',
+        title: 'World History',
+        description: 'Explore major historical events and their impact on modern society.',
+        credits: 4,
+        sections: [
+            { time: '9:00 AM', room: 'MC 201', professor: 'Brother Johnson' },
+            { time: '11:00 AM', room: 'MC 203', professor: 'Sister Williams' },
+            { time: '2:00 PM', room: 'MC 205', professor: 'Brother Brown' }
+        ]
     }
 };
 
@@ -118,11 +129,31 @@ app.get('/catalog', (req, res) => {
     });
 });
 
+// Random course route
+app.get('/catalog/random', (req, res) => {
+    //Stores all course IDs in an array
+    const courseIds = Object.keys(courses);
+    //Randomly selects one course ID from the array
+    const randomId = courseIds[Math.floor(Math.random() * courseIds.length)];
+    //Redirects the user to the random
+    res.redirect(`/catalog/${randomId}`);
+});
+
 // Enhanced course detail route with sorting
 app.get('/catalog/:courseId', (req, res, next) => {
-    const courseId = req.params.courseId;
+    // Added toUpperCase to make course ID case-insensitive (I had chatgpt help with this)
+    const courseId = req.params.courseId.toUpperCase();
     const course = courses[courseId];
+    // Regex pattern to validate course ID format (e.g., CS121) (I had chatgpt help with this)
+    const courseIdPattern = /^[A-Z]{2,6}[0-9]{3}$/; 
 
+    if (!courseIdPattern.test(courseId)) {
+        const err = new Error(`Invalid course ID format: ${courseId}. Please use format like CS121.`);
+        err.status = 400;
+        return next(err);
+    }
+
+    //Checks if the course exists in course object
     if (!course) {
         const err = new Error(`Course ${courseId} not found`);
         err.status = 404;
