@@ -17,6 +17,16 @@
                 <a href="/catalog/<%= course.id %>?sort=room"
                     class="<%= currentSort === 'room' ? 'active' : '' %>">Room</a>
             </div>
+            <% if (queryParams.sort) { %>
+            <div class="sort-message">
+                <p>Currently sorted by: <%= queryParams.sort %></p>
+            </div>
+            <% } else { %>
+            <div class="sort-message">
+                <p>No sorting applied, using default sorting by time.</p>
+            </div>
+            <% } %>
+
         </div>
 
         <div class="section-list">
