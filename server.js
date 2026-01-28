@@ -18,6 +18,9 @@ const name = process.env.NAME;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+//Demo count variable
+let demoPageRequestCount = 0;
+
 
 // Course data - place this after imports, before routes
 const courses = {
@@ -138,9 +141,28 @@ app.use((req, res, next) => {
     next();
 });
 
+//Global middleware for seasonal greeting (AI helped with part of this.)
+app.use((req, res, next) => {
+    const month = new Date().getMonth(); // Get current month (0-11)
+    let seasonGreeting;
+
+    if (month >= 2 && month <= 4) {
+        seasonGreeting = 'Happy Spring!';
+    } else if (month >= 5 && month <= 7) {
+        seasonGreeting = 'Enjoy your Summer!';
+    } else if (month >= 8 && month <= 10) {
+        seasonGreeting = 'Welcome to Fall!';
+    } else {
+        seasonGreeting = 'Happy Holidays!';
+    }
+
+    res.locals.seasonGreeting = seasonGreeting;
+    next();
+});
+
 // Global middleware for random theme selection
 app.use((req, res, next) => {
-    const themes = ['blue-theme', 'green-theme', 'red-theme'];
+    const themes = ['blue-theme', 'green-theme', 'red-theme', 'purple-theme', 'orange-theme'];
 
     // Your task: Pick a random theme from the array
     const randomTheme = themes[Math.floor(Math.random() * themes.length)];
@@ -166,6 +188,13 @@ const addDemoHeaders = (req, res, next) => {
     next();
 };
 
+//Route-specific middleware that counts visits to the demo page
+const countDemoRequests = (req, res, next) => {
+  demoPageRequestCount++;
+  res.locals.demoRequestCount = demoPageRequestCount;
+  next();
+};
+
 /**
  * Routes
  */
@@ -185,7 +214,7 @@ app.get('/products', (req, res) => {
 });
 
 // Demo page route with header middleware
-app.get('/demo', addDemoHeaders, (req, res) => {
+app.get('/demo', addDemoHeaders, countDemoRequests, (req, res) => {
     res.render('demo', {
         title: 'Middleware Demo Page'
     });
