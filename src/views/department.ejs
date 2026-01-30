@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+<main>
+    <h1>School Departments</h1>
+    <p>Check out our various departments and the courses they offer.</p>
+
+    <!--I had chatGPT help with the logic on this-->
+    <% if (Object.keys(departments).length === 0) { %>
+    <p>No departments found.</p>
+    <% } else { %>
+    <% Object.keys(departments).forEach(function(dept) { %>
+    <section>
+        <h2><%= dept %></h2>
+        <ul>
+            <% departments[dept].forEach(function(course) { %>
+            <li>
+                <strong><a href="/catalog/<%= course.id %>"><%= course.id %></a></strong>: <%= course.title %>
+            </li>
+            <% }); %>
+        </ul>
+    </section>
+    <% }); %>
+    <% } %>
+</main>
+<%- include('partials/footer') %>

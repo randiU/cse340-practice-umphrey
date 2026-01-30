@@ -1,3 +1,23 @@
+.btn-sort {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    background-color: #e0e7ef;
+    color: #2c5aa0;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-left: 1em;
+    transition: background-color 0.3s, color 0.3s;
+}
+.btn-sort.active, .btn-sort:active {
+    background-color: #2c5aa0;
+    color: white;
+}
+.btn-sort:hover {
+    background-color: #b3c7e6;
+    color: #1a3a6b;
+}
 /* Course catalog styles using native CSS nesting */
 .course-list {
     display: grid;

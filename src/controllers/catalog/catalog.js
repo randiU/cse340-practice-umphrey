@@ -1,12 +1,28 @@
 import { getAllCourses, getCourseById, getSortedSections } from '../../models/catalog/catalog.js';
 
 // Route handler for the course catalog list page
+//I had chatgpt help with some of the logic for sorting courses by credit hours
 const catalogPage = (req, res) => {
-    const courses = getAllCourses();
-
+    let coursesObj = getAllCourses();
+    const sort = req.query.sort;
+    let coursesArr = Object.values(coursesObj);
+    if (sort === 'credits') {
+        coursesArr = coursesArr.slice().sort((a, b) => a.credits - b.credits);
+    }
+    // Build a new object with the same keys as the original, but sorted if needed
+    let sortedCoursesObj = {};
+    if (sort === 'credits') {
+        // Rebuild as object with course.id as key
+        coursesArr.forEach(course => {
+            sortedCoursesObj[course.id] = course;
+        });
+    } else {
+        sortedCoursesObj = coursesObj;
+    }
     res.render('catalog', {
         title: 'Course Catalog',
-        courses: courses
+        courses: sortedCoursesObj,
+        currentSort: sort || ''
     });
 };
 

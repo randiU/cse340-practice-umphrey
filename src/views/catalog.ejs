@@ -4,8 +4,13 @@
     <p>Browse our available courses and click on any course to see detailed information including available sections and
         instructors.</p>
 
-    <div>
+    <!-- I had chatgpt help with some of the logic for the sorting buttons -->
+    <div style="margin-bottom:1em;">
         <a href="/catalog/random" class="btn-random">Get Random Course</a>
+        <a href="/catalog?sort=credits" class="btn-sort<% if (currentSort === 'credits') { %> active<% } %>">Sort by Credit Hour</a>
+        <% if (currentSort === 'credits') { %>
+            <a href="/catalog" class="btn-sort">Clear Sort</a>
+        <% } %>
     </div>
 
     <div class="course-list">
