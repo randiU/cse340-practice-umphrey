@@ -4,6 +4,7 @@ import { countDemoRequests } from '../middleware/demo/countDemoRequests.js';
 import { catalogPage, courseDetailPage, randomCoursePage } from './catalog/catalog.js';
 import { departmentPage } from './department/department.js';
 import { homePage, aboutPage, demoPage, testErrorPage } from './index.js';
+import { facultyListPage, facultyDetailPage } from './faculty/faculty.js';
 
 // Create a new router instance
 const router = Router();
@@ -22,6 +23,10 @@ router.get('/demo', addDemoHeaders, countDemoRequests, demoPage);
 
 // Departments page
 router.get('/departments', departmentPage);
+
+//Faculty page
+router.get('/faculty', facultyListPage);
+router.get('/faculty/:facultyId', facultyDetailPage);
 
 // Route to trigger a test error
 router.get('/test-error', testErrorPage);

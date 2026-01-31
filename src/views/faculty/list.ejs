@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+<main>
+    <h1><%= title %></h1>
+    <p>Meet our wonderful faculty members.</p>
+
+    <% if (faculty.length === 0) { %>
+    <p>No faculty members found.</p>
+    <% } else { %>
+    <!--I had chatGPT help with the logic on the sorting-->
+    <div style="margin-bottom:1em;">
+        <a href="/faculty?sort=name" class="btn-sort<% if (currentSort === 'name') { %> active<% } %>">Sort by Name</a>
+        <a href="/faculty?sort=department" class="btn-sort<% if (currentSort === 'department') { %> active<% } %>">Sort
+            by Department</a>
+        <a href="/faculty?sort=title" class="btn-sort<% if (currentSort === 'title') { %> active<% } %>">Sort by
+            Title</a>
+        <% if (currentSort && currentSort !== 'department') { %>
+        <a href="/faculty" class="btn-sort">Clear Sort</a>
+        <% } %>
+    </div>
+    <div class="faculty-list">
+        <% faculty.forEach(faculty => { %>
+        <div class="faculty-card">
+            <h3><a href="/faculty/<%= faculty.id %>"><%= faculty.name %></a></h3>
+            <p class="faculty-department"><%= faculty.department %></p>
+            <p class="faculty-title"><%= faculty.title %></p>
+        </div>
+        <% }); %>
+    </div>
+    <% } %>
+</main>
+<%- include('../partials/footer') %>
