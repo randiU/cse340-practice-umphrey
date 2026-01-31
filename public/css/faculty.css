@@ -1,4 +1,3 @@
-/* Nested (SCSS-like) syntax for easier maintenance */
 .faculty-list {
     display: flex;
     flex-wrap: wrap;
