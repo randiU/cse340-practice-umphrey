@@ -1,4 +1,4 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
 <main>
     <h1>Course Catalog</h1>
     <p>Browse our available courses and click on any course to see detailed information including available sections and
@@ -7,20 +7,21 @@
     <!-- I had chatgpt help with some of the logic for the sorting buttons -->
     <div style="margin-bottom:1em;">
         <a href="/catalog/random" class="btn-random">Get Random Course</a>
-        <a href="/catalog?sort=credits" class="btn-sort<% if (currentSort === 'credits') { %> active<% } %>">Sort by Credit Hour</a>
+        <a href="/catalog?sort=credits" class="btn-sort<% if (currentSort === 'credits') { %> active<% } %>">Sort by
+            Credit Hour</a>
         <% if (currentSort === 'credits') { %>
-            <a href="/catalog" class="btn-sort">Clear Sort</a>
+        <a href="/catalog" class="btn-sort">Clear Sort</a>
         <% } %>
     </div>
 
     <div class="course-list">
         <% Object.values(courses).forEach(course => { %>
         <div class="course-card">
-            <h3><a href="/catalog/<%= course.id %>"><%= course.title %></a></h3>
-            <p class="course-id"><%= course.id %> • <%= course.credits %> credits</p>
+            <h3><a href="/catalog/<%= course.slug %>"><%= course.name %></a></h3>
+            <p class="course-id"><%= course.courseCode %> • <%= course.creditHours %> credits</p>
             <p class="course-description"><%= course.description %></p>
         </div>
         <% }); %>
     </div>
 </main>
-<%- include('partials/footer') %>
+<%- include('../partials/footer') %>
