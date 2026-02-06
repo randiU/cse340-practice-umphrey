@@ -45,8 +45,8 @@ const courseDetailPage = async (req, res, next) => {
 
 const randomCoursePage = async(req, res, next) => {
     const courses = await getAllCourses();
-    const courseIds = Object.values(courses);
-    const randomCourse = courseIds[Math.floor(Math.random() * courseIds.length)];
+    const randomCourse = courses[Math.floor(Math.random() * courses.length)];
+    console.log('Random course selected:', randomCourse.slug);
     res.redirect(`/catalog/${randomCourse.slug}`);
 }
 

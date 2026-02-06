@@ -12,12 +12,14 @@ const router = Router();
 // Add catalog-specific styles to all catalog routes
 router.use('/catalog', (req, res, next) => {
     res.addStyle('<link rel="stylesheet" href="/css/catalog.css">');
+    res.addScript('<script src="/js/catalog.js"></script>');
     next();
 });
 
 // Add faculty-specific styles to all faculty routes
 router.use('/faculty', (req, res, next) => {
     res.addStyle('<link rel="stylesheet" href="/css/faculty.css">');
+    res.addScript('<script src="/js/faculty.js"></script>');
     next();
 });
 
