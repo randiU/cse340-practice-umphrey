@@ -62,6 +62,11 @@ const setHeadAssetsFunctionality = (res) => {
  * Templates can access these values but are not required to use them.
  */
 const addLocalVariables = (req, res, next) => {
+    // Convenience variable for UI state based on session state
+    res.locals.isLoggedIn = false;
+    if (req.session && req.session.user) {
+        res.locals.isLoggedIn = true;
+    }
 
     // Enable head asset management for every response
     setHeadAssetsFunctionality(res);

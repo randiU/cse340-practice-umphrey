@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import { emailExists, saveUser, getAllUsers, deleteUserById } from '../../models/forms/registration.js';
+import { requireLogin } from '../../middleware/auth.js';
 
 const router = Router();
 
@@ -152,8 +153,8 @@ router.get('/', showRegistrationForm);
 router.post('/', registrationValidation, processRegistration);
 
 /**
- * GET /register/list - Display all registered users
+ * GET /register/list - Display all registered users (protected)
  */
-router.get('/list', showAllUsers);
+router.get('/list', requireLogin, showAllUsers);
 
 export default router;
