@@ -27,7 +27,7 @@ const app = express();
  * Configure Express
  */
 app.use(express.static(path.join(__dirname, 'public')));
-// Allow Express to receive and process POST data
+// Allow Express to receive and process POST data creates body object on req with form data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

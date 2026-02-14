@@ -12,3 +12,16 @@ CREATE TABLE IF NOT EXISTS contact_form (
 ALTER TABLE contact_form
 ADD COLUMN IF NOT EXISTS name VARCHAR(100),
     ADD COLUMN IF NOT EXISTS email VARCHAR(255);
+-- Users table for registration system
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+-- Add phone and address columns to users if they don't exist
+ALTER TABLE users
+ADD COLUMN IF NOT EXISTS phone VARCHAR(30),
+    ADD COLUMN IF NOT EXISTS address VARCHAR(255);
