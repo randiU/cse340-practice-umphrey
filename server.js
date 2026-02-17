@@ -63,6 +63,9 @@ app.use(session({
     }
 }));
 
+// Start automatic session cleanup
+startSessionCleanup();
+
 //Checks is session cleanup is running in global.js and logs message to console
 console.log('Session cleanup scheduling is enabled (connect-pg-simple will handle expired sessions).');
 
