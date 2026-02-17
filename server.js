@@ -31,6 +31,10 @@ const PORT = process.env.PORT || 3000;
  */
 const app = express();
 
+// Required for secure cookies when deployed on Render behind a proxy
+app.set("trust proxy", 1);
+
+
 // Initialize PostgreSQL session store
 const pgSession = connectPgSimple(session);
 
