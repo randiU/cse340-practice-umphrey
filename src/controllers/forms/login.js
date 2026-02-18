@@ -36,7 +36,9 @@ const processLogin = async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        console.error('Validation errors:', errors.array());
+        errors.array().forEach(error => {
+            req.flash('error', error.msg);
+        });
         return res.redirect('/login');
     }
 
@@ -45,13 +47,14 @@ const processLogin = async (req, res) => {
 
         const user = await findUserByEmail(email);
         if (!user) {
-            console.error('User not found with email:', email);
+            req.flash('error', 'Invalid email or password');
             return res.redirect('/login');
         }
 
         const isPasswordValid = await verifyPassword(password, user.password);
+
         if (!isPasswordValid) {
-            console.error('Invalid password for email:', email);
+            req.flash('error', 'Invalid email or password');
             return res.redirect('/login');
         }
 
@@ -65,9 +68,11 @@ const processLogin = async (req, res) => {
         req.session.save((err) => {
             if (err) {
                 console.error('Error saving session:', err);
+                req.flash('error', 'There was a problem logging you in. Please try again.');
                 return res.redirect('/login');
             }
             // Redirect to dashboard after session is saved
+            req.flash('success', 'Login successful!');
             return res.redirect('/dashboard');
         });
         //catch block to handle any unexpected errors during login process - mainly runtime errors like database connection issues, bcrypt errors, etc.
