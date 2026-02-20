@@ -8,14 +8,19 @@ import db from '../db.js';
  * @returns {Promise<Object|null>} User object with password hash or null if not found
  */
 const findUserByEmail = async (email) => {
-    //Create sql query to find user by email, using LOWER() for case-insensitive match
     const query = `
-        SELECT id, name, email, password, created_at
+        SELECT 
+            users.id, 
+            users.name, 
+            users.email, 
+            users.password, 
+            users.created_at,
+            roles.role_name AS "roleName"
         FROM users
-        WHERE LOWER(email) = LOWER($1)
+        INNER JOIN roles ON users.role_id = roles.id
+        WHERE LOWER(users.email) = LOWER($1)
         LIMIT 1
     `;
-    //returns result of query, which is an array of rows. We want the first row (if it exists) or null if no user found
     const result = await db.query(query, [email]);
     return result.rows[0] || null;
 };
