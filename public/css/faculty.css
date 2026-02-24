@@ -13,6 +13,7 @@
         width: 260px;
         box-shadow: 0 2px 6px rgba(0,0,0,0.04);
         transition: box-shadow 0.2s;
+        position: relative;
 
         &:hover {
             box-shadow: 0 4px 16px rgba(0,0,0,0.10);
@@ -40,6 +41,17 @@
             font-size: 1em;
         }
     }
+}
+
+.faculty-photo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 15px;
+    background: url('https://placehold.co/480') center / cover no-repeat;
+    border-radius: 10px;
+    box-shadow: 8px 13px 19px -4px rgba(60,60,60,0.37);
 }
 
 .btn-sort {

@@ -20,6 +20,7 @@
     <div class="faculty-list">
         <% Object.values(faculty).forEach(faculty => { %>
         <div class="faculty-card">
+            <img src="/images/faculty/<%= faculty.slug %>.jpg" alt="<%= faculty.name %>" class="faculty-photo">
             <h3><a href="/faculty/<%= faculty.slug %>"><%= faculty.name %></a></h3>
             <p class="faculty-department"><%= faculty.department %></p>
             <p class="faculty-title"><%= faculty.title %></p>

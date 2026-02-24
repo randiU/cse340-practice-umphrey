@@ -5,6 +5,7 @@
     <p>Faculty member not found.</p>
     <% } else { %>
     <div class="faculty-details">
+        <img src="/images/faculty/<%= faculty.slug %>.jpg" alt="<%= faculty.name %>" class="faculty-photo">
         <h2><%= faculty.name %></h2>
         <p><strong>Title:</strong> <%= faculty.title %></p>
         <p><strong>Department:</strong> <%= faculty.department %></p>
