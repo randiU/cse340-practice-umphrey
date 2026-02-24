@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { body, validationResult } from 'express-validator';
+import { validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import { 
     emailExists, 
@@ -10,74 +10,10 @@ import {
     deleteUser
 } from '../../models/forms/registration.js';
 import { requireLogin } from '../../middleware/auth.js';
+// import { registrationValidation, editValidation } from '../../middleware/validation/forms.js';
 
-const router = Router();
 
-/**
- * Validation rules for user registration
- */
-const registrationValidation = [
-    body('name')
-        .trim()
-        .isLength({ min: 2, max: 100 })
-        .withMessage('Name must be between 2 and 100 characters')
-        .matches(/^[a-zA-Z\s'-]+$/)
-        .withMessage("Name can only contain letters, spaces, hyphens, and apostrophes"),
-    body('phone')
-        .trim()
-        .isMobilePhone().withMessage('Enter a valid phone number')
-        .isLength({ min: 10, max: 20 }).withMessage('Phone number should be 10-20 digits')
-        .escape(),
-    body('address')
-        .trim()
-        .isLength({ min: 5 })
-        .withMessage('Address must be at least 5 characters')
-        .escape(),
-    body('email')
-        .trim()
-        .isEmail()
-        .normalizeEmail()
-        .withMessage('Must be a valid email address')
-        .isLength({ max: 255 })
-        .withMessage('Email address is too long'),
-    body('emailConfirm')
-        .trim()
-        .custom((value, { req }) => value === req.body.email)
-        .withMessage('Email addresses must match'),
-    body('password')
-        .isLength({ min: 8, max: 128 })
-        .withMessage('Password must be between 8 and 128 characters')
-        .matches(/[0-9]/)
-        .withMessage('Password must contain at least one number')
-        .matches(/[a-z]/)
-        .withMessage('Password must contain at least one lowercase letter')
-        .matches(/[A-Z]/)
-        .withMessage('Password must contain at least one uppercase letter')
-        .matches(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/)
-        .withMessage('Password must contain at least one special character'),
-    body('passwordConfirm')
-        .custom((value, { req }) => value === req.body.password)
-        .withMessage('Passwords must match')
-];
 
-/**
- * Validation rules for editing user accounts
- */
-const editValidation = [
-    body('name')
-        .trim()
-        .isLength({ min: 2, max: 100 })
-        .withMessage('Name must be between 2 and 100 characters')
-        .matches(/^[a-zA-Z\s'-]+$/)
-        .withMessage('Name can only contain letters, spaces, hyphens, and apostrophes'),
-    body('email')
-        .trim()
-        .isEmail()
-        .normalizeEmail()
-        .withMessage('Must be a valid email address')
-        .isLength({ max: 255 })
-        .withMessage('Email address is too long')
-];
 
 /**
  * Display the registration form page.
@@ -295,39 +231,46 @@ const processDeleteAccount = async (req, res) => {
     res.redirect('/register/list');
 };
 
-/**
- * POST /register/delete/:id - Delete a user by ID
- */
-router.post('/delete/:id', deleteUserById);
+// /**
+//  * POST /register/delete/:id - Delete a user by ID
+//  */
+// router.post('/delete/:id', deleteUserById);
 
-/**
- * GET /register - Display the registration form
- */
-router.get('/', showRegistrationForm);
+// /**
+//  * GET /register - Display the registration form
+//  */
+// router.get('/', showRegistrationForm);
 
-/**
- * POST /register - Handle registration form submission with validation
- */
-router.post('/', registrationValidation, processRegistration);
+// /**
+//  * POST /register - Handle registration form submission with validation
+//  */
+// router.post('/', registrationValidation, processRegistration);
 
-/**
- * GET /register/list - Display all registered users (protected)
- */
-router.get('/list', requireLogin, showAllUsers);
+// /**
+//  * GET /register/list - Display all registered users (protected)
+//  */
+// router.get('/list', requireLogin, showAllUsers);
 
-/**
- * GET /register/:id/edit - Display edit account form
- */
-router.get('/:id/edit', requireLogin, showEditAccountForm);
+// /**
+//  * GET /register/:id/edit - Display edit account form
+//  */
+// router.get('/:id/edit', requireLogin, showEditAccountForm);
 
-/**
- * POST /register/:id/edit - Process account edit
- */
-router.post('/:id/edit', requireLogin, editValidation, processEditAccount);
+// /**
+//  * POST /register/:id/edit - Process account edit
+//  */
+// router.post('/:id/edit', requireLogin, editValidation, processEditAccount);
 
-/**
- * POST /register/:id/delete - Delete user account
- */
-router.post('/:id/delete', requireLogin, processDeleteAccount);
+// /**
+//  * POST /register/:id/delete - Delete user account
+//  */
+// router.post('/:id/delete', requireLogin, processDeleteAccount);
 
-export default router;
+export {
+    showRegistrationForm,
+    processRegistration,
+    showAllUsers,
+    showEditAccountForm,
+    processEditAccount,
+    processDeleteAccount
+};
